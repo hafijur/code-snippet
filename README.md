@@ -41,3 +41,12 @@
 </VirtualHost>
 
 ```
+### NVM node full install on single command
+
+```
+sudo git clone https://github.com/nvm-sh/nvm.git /usr/local/nvm \
+&& sudo sh -c 'echo "source /usr/local/nvm/nvm.sh" >> /etc/profile' \
+&& source /etc/profile \
+&& nvm install --lts \
+&& n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
+```
