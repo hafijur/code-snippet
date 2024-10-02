@@ -50,3 +50,29 @@ sudo git clone https://github.com/nvm-sh/nvm.git /usr/local/nvm \
 && nvm install --lts \
 && n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 ```
+
+### Apache proxy for nextjs and subfolder exclude from nextjs route
+
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    # Exclude /admin from being proxied to Next.js
+    ProxyPass "/backend" !
+
+    # Proxy all other requests to the Next.js app
+    ProxyPass "/" "http://137.184.151.147:8001/"
+    ProxyPassReverse "/" "http://137.184.151.147:8001/"
+
+    # Serve /admin requests from the PHP application
+    Alias /backend /var/www/html/backend
+    <Directory "/var/www/html/backend">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+</VirtualHost>
+
+```
