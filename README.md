@@ -76,3 +76,26 @@ sudo git clone https://github.com/nvm-sh/nvm.git /usr/local/nvm \
 </VirtualHost>
 
 ```
+
+# For laravel permission change and git untrack file issue do those steps
+
+- Run this this command
+    ```
+    git config core.fileMode false
+    ```
+- Update .gitignore file
+    ```
+    /storage/*
+    !/storage/.gitignore
+    /bootstrap/cache/*
+    !/bootstrap/cache/.gitignore
+    ```
+- Use this for web users
+    ```
+    sudo chmod -R 775 storage/ bootstrap/cache
+    sudo chown -R www-data:www-data storage/ bootstrap/cache
+    ```
+- Or do this 
+    ```
+    sudo chmod -R 777 storage/ bootstrap/cache
+    ```
