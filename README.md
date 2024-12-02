@@ -99,3 +99,14 @@ sudo git clone https://github.com/nvm-sh/nvm.git /usr/local/nvm \
     ```
     sudo chmod -R 777 storage/ bootstrap/cache
     ```
+# Check the MYSQL Authentication Method
+
+    ```
+    sudo mysql
+    SELECT user, host, plugin FROM mysql.user
+    ```
+# Change the Authentication Method to Password
+
+    ```
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_password';
+    ```
