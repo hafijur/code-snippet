@@ -77,6 +77,54 @@ sudo git clone https://github.com/nvm-sh/nvm.git /usr/local/nvm \
 
 ```
 
+### Apache cors header add issue solve
+
+- #### Enable Apache Modules
+
+```
+    sudo a2enmod headers
+    sudo systemctl restart apache2
+```
+
+- ##### Edit your main Apache configuration file, typically found at:
+
+    - /etc/apache2/apache2.conf (Ubuntu/Debian)
+    - /etc/httpd/conf/httpd.conf (CentOS/RHEL)
+##### Add the following inside the <Directory> block or at the end of the file:
+
+```
+    <IfModule mod_headers.c>
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+        Header set Access-Control-Allow-Credentials "true"
+    </IfModule>
+```
+
+### For virtual host configuration
+
+###### Edit your virtual host file for the specific domain, typically found at:
+
+- /etc/apache2/sites-available/your-domain.conf (Ubuntu/Debian)
+- /etc/httpd/conf.d/your-domain.conf (CentOS/RHEL)
+
+##### Add the headers inside the <VirtualHost> block:
+
+```
+    <VirtualHost *:80>
+        ServerName your-domain.com
+        DocumentRoot /var/www/html/your-site
+
+        <IfModule mod_headers.c>
+            Header set Access-Control-Allow-Origin "*"
+            Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+            Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+            Header set Access-Control-Allow-Credentials "true"
+        </IfModule>
+    </VirtualHost>
+```
+
+
 # For laravel permission change and git untrack file issue do those steps
 
 - Run this this command
